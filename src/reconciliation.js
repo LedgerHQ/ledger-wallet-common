@@ -26,6 +26,7 @@ import {
   fromBalanceHistoryRawMap,
   fromAlgorandResourcesRaw,
   fromPolkadotResourcesRaw,
+  fromElrondResourcesRaw,
 } from "./account";
 import consoleWarnExpectToEqual from "./consoleWarnExpectToEqual";
 
@@ -336,6 +337,14 @@ export function patchAccount(
     next.polkadotResources = fromPolkadotResourcesRaw(
       updatedRaw.polkadotResources
     );
+    changed = true;
+  }
+
+  if (
+    updatedRaw.elrondResources &&
+    account.elrondResources !== updatedRaw.elrondResources
+  ) {
+    next.elrondResources = fromElrondResourcesRaw(updatedRaw.elrondResources);
     changed = true;
   }
 
