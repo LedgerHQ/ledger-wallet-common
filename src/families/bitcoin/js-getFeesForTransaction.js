@@ -1,17 +1,27 @@
 // @flow
-
 import { BigNumber } from "bignumber.js";
-import { libcoreAmountToBigNumber } from "../../libcore/buildBigNumber";
-import buildTransaction from "./libcore-buildTransaction";
-import {
-  parseBitcoinOutput,
-  parseBitcoinInput,
-  perCoinLogic,
-} from "./transaction";
-import { promiseAllBatched } from "../../promise";
-import type { BitcoinInput, BitcoinOutput } from "./types";
 
-async function bitcoin(arg: *) {
+import type { Account } from "./../../types";
+import type { Transaction, BitcoinInput, BitcoinOutput } from "./types";
+
+// FIXME Does this object make sense?
+export type EstimatedFees = {
+  estimatedFees: BigNumber,
+  value: BigNumber,
+  txInputs: BitcoinInput[],
+  txOutputs: BitcoinOutput[],
+};
+const getFeesForTransaction = async ({
+  account,
+  transaction,
+}: {
+  account: Account,
+  transaction: Transaction,
+}): Promise<EstimatedFees> => {
+  // TODO
+
+  // Current libcore-based implem:
+  /*
   const builded = await buildTransaction(arg);
   if (!builded) return;
   const feesAmount = await builded.getFees();
@@ -19,7 +29,7 @@ async function bitcoin(arg: *) {
     throw new Error("getFeesForTransaction: fees should not be undefined");
   }
   const estimatedFees = await libcoreAmountToBigNumber(feesAmount);
-  // TODO we don't have a getValue on bitcoin
+  // we don't have a getValue on bitcoin
   const value = BigNumber(0);
   const inputs = await builded.getInputs();
   let txInputs: BitcoinInput[] = await promiseAllBatched(
@@ -50,7 +60,14 @@ async function bitcoin(arg: *) {
     }
   }
 
-  return { estimatedFees, value, txInputs, txOutputs };
-}
+  */
 
-export default bitcoin;
+  return {
+    estimatedFees: BigNumber(0),
+    value: BigNumber(0),
+    txInputs: [],
+    txOutputs: [],
+  };
+};
+
+export default getFeesForTransaction;

@@ -1,17 +1,9 @@
 // @flow
 import { BigNumber } from "bignumber.js";
-import type { NetworkInfo } from "./types";
+
 import type { Account } from "../../types";
-import type { CoreAccount } from "../../libcore/types";
-import { promiseAllBatched } from "../../promise";
-import { libcoreBigIntToBigNumber } from "../../libcore/buildBigNumber";
 
-type Input = {
-  coreAccount: CoreAccount,
-  account: Account,
-};
-
-type Output = Promise<NetworkInfo>;
+import { getFees } from "./api/ledgerApi";
 
 const speeds = ["fast", "medium", "slow"];
 
@@ -25,14 +17,11 @@ export function avoidDups(nums: Array<BigNumber>): Array<BigNumber> {
   return nums;
 }
 
-async function bitcoin({ coreAccount }: Input): Output {
-  const bitcoinLikeAccount = await coreAccount.asBitcoinLikeAccount();
-  const bigInts = await bitcoinLikeAccount.getFees();
-  const bigNumbers = await promiseAllBatched(
-    10,
-    bigInts,
-    libcoreBigIntToBigNumber
-  );
+export async function getAccountNetworkInfo(
+  account: Account
+): Promise<NetworkInfo> {
+  const bigNumbers = await getFees(account);
+
   const normalized = avoidDups(
     bigNumbers.map((bn) => bn.div(1000).integerValue(BigNumber.ROUND_CEIL))
   );
@@ -50,5 +39,3 @@ async function bitcoin({ coreAccount }: Input): Output {
     feeItems,
   };
 }
-
-export default bitcoin;

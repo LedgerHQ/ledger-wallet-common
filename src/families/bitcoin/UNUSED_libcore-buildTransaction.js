@@ -7,9 +7,12 @@ import { isValidRecipient } from "../../libcore/isValidRecipient";
 import { bigNumberToLibcoreAmount } from "../../libcore/buildBigNumber";
 import type { Core, CoreCurrency, CoreAccount } from "../../libcore/types";
 import type { CoreBitcoinLikeTransaction, Transaction } from "./types";
-import { getUTXOStatus } from "./transaction";
+
 import { promiseAllBatched } from "../../promise";
-import { parseBitcoinUTXO, perCoinLogic } from "./transaction";
+import { perCoinLogic, getUTXOStatus } from "./logic";
+import { parseBitcoinUTXO } from "./transaction";
+
+// TODO Use this logic in signOperation if needed, then remove the file
 
 async function bitcoinBuildTransaction({
   account,
@@ -115,4 +118,4 @@ async function bitcoinBuildTransaction({
   return builded;
 }
 
-export default bitcoinBuildTransaction;
+//export default bitcoinBuildTransaction;

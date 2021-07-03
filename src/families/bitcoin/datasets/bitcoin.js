@@ -3,7 +3,7 @@ import { BigNumber } from "bignumber.js";
 // import { FeeTooHigh } from "@ledgerhq/errors";
 import type { CurrenciesData } from "../../../types";
 import type { NetworkInfoRaw, Transaction } from "../types";
-import { fromTransactionRaw } from "../transaction";
+import { fromTransactionRaw } from "../serialization";
 import scanAccounts1 from "./bitcoin.scanAccounts.1";
 
 const networkInfo: NetworkInfoRaw = {
@@ -31,6 +31,7 @@ const dataset: CurrenciesData<Transaction> = {
             recipient: "1Cz2ZXb6Y6AacXJTpo4RBjQMLEmscuxD8e",
             amount: "999",
             feePerByte: "1",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
@@ -57,6 +58,7 @@ const dataset: CurrenciesData<Transaction> = {
             recipient: "34N7XoKANmM66ZQDyQf2j8hPaTo6v5X8eA",
             amount: "998",
             feePerByte: "1",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
@@ -83,6 +85,7 @@ const dataset: CurrenciesData<Transaction> = {
             recipient: "BC1QQMXQDRKXGX6SWRVJL9L2E6SZVVKG45ALL5U4FL",
             amount: "997",
             feePerByte: "1",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {

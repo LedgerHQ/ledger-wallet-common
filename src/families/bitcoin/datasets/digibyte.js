@@ -3,7 +3,7 @@
 import { BigNumber } from "bignumber.js";
 import type { CurrenciesData } from "../../../types";
 import type { NetworkInfoRaw, Transaction } from "../types";
-import { fromTransactionRaw } from "../transaction";
+import { fromTransactionRaw } from "../serialization";
 import scanAccounts1 from "./digibyte.scanAccounts.1";
 
 const networkInfo: NetworkInfoRaw = {
@@ -31,6 +31,7 @@ const dataset: CurrenciesData<Transaction> = {
             recipient: "DMtVdcKhnbntP1dSYYmSFNg8GK1T8aCwCb",
             amount: "500000000",
             feePerByte: "1",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
@@ -54,6 +55,7 @@ const dataset: CurrenciesData<Transaction> = {
             recipient: "Sb4r6mx1WEZGzJvXZVqr17vYQ9yLhmjuSz",
             amount: "500000000",
             feePerByte: "1",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
@@ -77,6 +79,7 @@ const dataset: CurrenciesData<Transaction> = {
             recipient: "dgb1q6c5jzgduyje29w9lsdwkd52dn3qxpcch87urdm",
             amount: "500000000",
             feePerByte: "1",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {

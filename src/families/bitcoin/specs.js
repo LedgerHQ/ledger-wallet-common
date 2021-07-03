@@ -11,8 +11,7 @@ import { pickSiblings } from "../../bot/specs";
 import { bitcoinPickingStrategy } from "./types";
 import type { MutationSpec, AppSpec } from "../../bot/types";
 import { LowerThanMinimumRelayFee } from "../../errors";
-import { getMinRelayFee } from "./fees";
-import { isChangeOutput, getUTXOStatus } from "./transaction";
+import { isChangeOutput, getMinRelayFee, getUTXOStatus } from "./logic";
 
 type Arg = $Shape<{
   minimalAmount: BigNumber,

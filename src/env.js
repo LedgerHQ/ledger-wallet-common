@@ -47,6 +47,11 @@ const envDefinitions = {
     parser: stringParser,
     desc: "Node API key for algorand",
   },
+  API_BITCOIN_EXPLORER_LEDGER: {
+    def: "https://explorers.api.vault.ledger.com/blockchain/v3/btc",
+    parser: stringParser,
+    desc: "Bitcoin Explorer",
+  },
   API_COSMOS_BLOCKCHAIN_EXPLORER_API_ENDPOINT: {
     def: "https://cosmoshub4.coin.ledger.com/",
     parser: stringParser,

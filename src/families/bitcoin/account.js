@@ -3,7 +3,7 @@ import type { Account } from "../../types";
 import type { BitcoinOutput, BitcoinInput } from "./types";
 import { formatCurrencyUnit } from "../../currencies";
 import { getEnv } from "../../env";
-import { perCoinLogic } from "./transaction";
+import { perCoinLogic } from "./logic";
 
 const sortUTXO = (a, b) => b.value.minus(a.value).toNumber();
 

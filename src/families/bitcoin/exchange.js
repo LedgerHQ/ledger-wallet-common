@@ -1,9 +1,11 @@
 // @flow
 
+import invariant from "invariant";
+
 import { bip32asBuffer } from "@ledgerhq/hw-app-btc/lib/bip32";
+
 import type { DerivationMode } from "../../derivation";
 import { getAddressFormatDerivationMode } from "../../derivation";
-import invariant from "invariant";
 
 const addressFormatMap = {
   legacy: 0,

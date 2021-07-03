@@ -3,7 +3,7 @@
 import { BigNumber } from "bignumber.js";
 import type { CurrenciesData } from "../../../types";
 import type { NetworkInfoRaw, Transaction } from "../types";
-import { fromTransactionRaw } from "../transaction";
+import { fromTransactionRaw } from "../serialization";
 import scanAccounts1 from "./litecoin.scanAccounts.1";
 
 const networkInfo: NetworkInfoRaw = {
@@ -32,6 +32,7 @@ const dataset: CurrenciesData<Transaction> = {
             useAllAmount: false,
             family: "bitcoin",
             feePerByte: "39",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
@@ -56,6 +57,7 @@ const dataset: CurrenciesData<Transaction> = {
             useAllAmount: false,
             family: "bitcoin",
             feePerByte: "39",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
@@ -80,6 +82,7 @@ const dataset: CurrenciesData<Transaction> = {
             useAllAmount: false,
             family: "bitcoin",
             feePerByte: "39",
+            fees: "0", // TODO Define fees value
             networkInfo,
             rbf: false,
             utxoStrategy: {
