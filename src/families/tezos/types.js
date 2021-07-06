@@ -13,6 +13,24 @@ import type {
   TransactionCommonRaw,
 } from "../../types/transaction";
 
+export type TezosOperationMode = "send" | "delegate" | "undelegate";
+
+export type TezosOperationTag = $Values<typeof tezosOperationTag>;
+
+export type TezosResources = {|
+  revealed: boolean,
+  publicKey: string,
+  counter: number,
+|};
+
+export type TezosResourcesRaw = {|
+  revealed: boolean,
+  publicKey: string,
+  counter: number,
+|};
+
+// WILL BE DROPPED =>
+
 export const tezosOperationTag = {
   OPERATION_TAG_NONE: 0,
   OPERATION_TAG_NONE1: 1,
@@ -26,10 +44,6 @@ export const tezosOperationTag = {
   OPERATION_TAG_ORIGINATION: 9,
   OPERATION_TAG_DELEGATION: 10,
 };
-
-export type TezosOperationMode = "send" | "delegate" | "undelegate";
-
-export type TezosOperationTag = $Values<typeof tezosOperationTag>;
 
 declare class CoreTezosLikeAddress {
   toBase58(): Promise<string>;

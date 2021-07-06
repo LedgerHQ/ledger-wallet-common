@@ -36,6 +36,10 @@ import {
   fromPolkadotResourcesRaw,
 } from "../families/polkadot/serialization";
 import {
+  toTezosResourcesRaw,
+  fromTezosResourcesRaw,
+} from "../families/tezos/serialization";
+import {
   toCryptoOrgResourcesRaw,
   fromCryptoOrgResourcesRaw,
 } from "../families/crypto_org/serialization";
@@ -57,6 +61,7 @@ export { toCosmosResourcesRaw, fromCosmosResourcesRaw };
 export { toAlgorandResourcesRaw, fromAlgorandResourcesRaw };
 export { toBitcoinResourcesRaw, fromBitcoinResourcesRaw };
 export { toPolkadotResourcesRaw, fromPolkadotResourcesRaw };
+export { toTezosResourcesRaw, fromTezosResourcesRaw };
 export { toCryptoOrgResourcesRaw, fromCryptoOrgResourcesRaw };
 
 export function toBalanceHistoryRaw(b: BalanceHistory): BalanceHistoryRaw {

@@ -6,6 +6,7 @@ import ethereum from "../families/ethereum/specs.js";
 import polkadot from "../families/polkadot/specs.js";
 import ripple from "../families/ripple/specs.js";
 import stellar from "../families/stellar/specs.js";
+import tezos from "../families/tezos/specs.js";
 import tron from "../families/tron/specs.js";
 
 export default {
@@ -16,5 +17,6 @@ export default {
   polkadot,
   ripple,
   stellar,
+  tezos,
   tron,
 };

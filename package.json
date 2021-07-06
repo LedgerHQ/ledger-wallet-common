@@ -94,6 +94,8 @@
     "@ledgerhq/hw-transport-node-speculos": "6.0.2",
     "@ledgerhq/logs": "6.0.2",
     "@polkadot/types": "4.17.1",
+    "@taquito/ledger-signer": "^9.2.0",
+    "@taquito/taquito": "^9.2.0",
     "@walletconnect/client": "1.4.1",
     "@xstate/react": "^1.4.0",
     "async": "^3.2.0",

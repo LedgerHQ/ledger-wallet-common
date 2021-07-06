@@ -6,6 +6,7 @@ import ethereum from "../families/ethereum/speculos-deviceActions.js";
 import polkadot from "../families/polkadot/speculos-deviceActions.js";
 import ripple from "../families/ripple/speculos-deviceActions.js";
 import stellar from "../families/stellar/speculos-deviceActions.js";
+import tezos from "../families/tezos/speculos-deviceActions.js";
 import tron from "../families/tron/speculos-deviceActions.js";
 
 export default {
@@ -16,5 +17,6 @@ export default {
   polkadot,
   ripple,
   stellar,
+  tezos,
   tron,
 };
