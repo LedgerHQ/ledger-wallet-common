@@ -42,6 +42,15 @@ import type { Transaction as ethereumTransaction } from "../families/ethereum/ty
 import type { TransactionRaw as ethereumTransactionRaw } from "../families/ethereum/types";
 import type { NetworkInfo as ethereumNetworkInfo } from "../families/ethereum/types";
 import type { NetworkInfoRaw as ethereumNetworkInfoRaw } from "../families/ethereum/types";
+import { reflect as hederaReflect } from "../families/hedera/types";
+import type { CoreStatics as CoreStatics_hedera } from "../families/hedera/types";
+import type { CoreAccountSpecifics as CoreAccountSpecifics_hedera } from "../families/hedera/types";
+import type { CoreOperationSpecifics as CoreOperationSpecifics_hedera } from "../families/hedera/types";
+import type { CoreCurrencySpecifics as CoreCurrencySpecifics_hedera } from "../families/hedera/types";
+import type { Transaction as hederaTransaction } from "../families/hedera/types";
+import type { TransactionRaw as hederaTransactionRaw } from "../families/hedera/types";
+import type { NetworkInfo as hederaNetworkInfo } from "../families/hedera/types";
+import type { NetworkInfoRaw as hederaNetworkInfoRaw } from "../families/hedera/types";
 import { reflect as neoReflect } from "../families/neo/types";
 import type { CoreStatics as CoreStatics_neo } from "../families/neo/types";
 import type { CoreAccountSpecifics as CoreAccountSpecifics_neo } from "../families/neo/types";
@@ -101,6 +110,7 @@ export type SpecificStatics = {}
 & CoreStatics_cosmos
 & CoreStatics_crypto_org
 & CoreStatics_ethereum
+& CoreStatics_hedera
 & CoreStatics_neo
 & CoreStatics_polkadot
 & CoreStatics_ripple
@@ -113,6 +123,7 @@ export type CoreAccountSpecifics = {}
 & CoreAccountSpecifics_cosmos
 & CoreAccountSpecifics_crypto_org
 & CoreAccountSpecifics_ethereum
+& CoreAccountSpecifics_hedera
 & CoreAccountSpecifics_neo
 & CoreAccountSpecifics_polkadot
 & CoreAccountSpecifics_ripple
@@ -125,6 +136,7 @@ export type CoreOperationSpecifics = {}
 & CoreOperationSpecifics_cosmos
 & CoreOperationSpecifics_crypto_org
 & CoreOperationSpecifics_ethereum
+& CoreOperationSpecifics_hedera
 & CoreOperationSpecifics_neo
 & CoreOperationSpecifics_polkadot
 & CoreOperationSpecifics_ripple
@@ -137,6 +149,7 @@ export type CoreCurrencySpecifics = {}
 & CoreCurrencySpecifics_cosmos
 & CoreCurrencySpecifics_crypto_org
 & CoreCurrencySpecifics_ethereum
+& CoreCurrencySpecifics_hedera
 & CoreCurrencySpecifics_neo
 & CoreCurrencySpecifics_polkadot
 & CoreCurrencySpecifics_ripple
@@ -149,6 +162,7 @@ export type Transaction =
   | cosmosTransaction
   | crypto_orgTransaction
   | ethereumTransaction
+  | hederaTransaction
   | neoTransaction
   | polkadotTransaction
   | rippleTransaction
@@ -161,6 +175,7 @@ export type TransactionRaw =
   | cosmosTransactionRaw
   | crypto_orgTransactionRaw
   | ethereumTransactionRaw
+  | hederaTransactionRaw
   | neoTransactionRaw
   | polkadotTransactionRaw
   | rippleTransactionRaw
@@ -172,6 +187,7 @@ export type NetworkInfo =
   | cosmosNetworkInfo
   | crypto_orgNetworkInfo
   | ethereumNetworkInfo
+  | hederaNetworkInfo
   | neoNetworkInfo
   | rippleNetworkInfo
   | stellarNetworkInfo
@@ -182,6 +198,7 @@ export type NetworkInfoRaw =
   | cosmosNetworkInfoRaw
   | crypto_orgNetworkInfoRaw
   | ethereumNetworkInfoRaw
+  | hederaNetworkInfoRaw
   | neoNetworkInfoRaw
   | rippleNetworkInfoRaw
   | stellarNetworkInfoRaw
@@ -193,6 +210,7 @@ export const reflectSpecifics = (declare: *) => [
   cosmosReflect(declare),
   crypto_orgReflect(declare),
   ethereumReflect(declare),
+  hederaReflect(declare),
   neoReflect(declare),
   polkadotReflect(declare),
   rippleReflect(declare),

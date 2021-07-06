@@ -148,7 +148,7 @@ export const CosmosBroadcastError = {
   "33": createCustomErrorClass("CosmosBroadcastPackAny"),
   "34": createCustomErrorClass("CosmosBroadcastUnpackAny"),
   "35": createCustomErrorClass("CosmosBroadcastLogic"),
-  "36": createCustomErrorClass("CosmosBroadcastConflict"),
+  "36": createCustomErrorClass("CosmosBroadcastConflict")
 };
 
 export const SatStackVersionTooOld = createCustomErrorClass(
@@ -204,3 +204,5 @@ export const FreshAddressIndexInvalid = createCustomErrorClass(
 );
 
 export * from "./families/polkadot/errors";
+
+export * from "./families/hedera/errors";
