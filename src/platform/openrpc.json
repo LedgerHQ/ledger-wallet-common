@@ -1,0 +1,1197 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Ledger Live Platform API",
+        "version": "1.0.0",
+        "description": "An JSON-RPC 2.0 API between Ledger Live and third-party applications",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "methods": [
+        {
+            "name": "ledgerlive.request_account",
+            "summary": "Request access to an account through Ledger Live UI.",
+            "description": "Request access to an account through Ledger Live UI.",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Accounts"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionRequestAccount"
+                },
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "selection",
+                    "summary": "Selection filter used to fetch the account",
+                    "description": "A set of filter used to select specific account on Ledger Live. If null it will prompt the user to choose from all accounts.",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountSelection"
+                    }
+                }
+            ],
+            "result": {
+                "name": "accounts",
+                "required": true,
+                "description": "The account selected by the user",
+                "summary": "The account selected by the user",
+                "schema": {
+                    "$ref": "#/components/schemas/Account"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/UserCancel"
+                },
+                {
+                    "$ref": "#/components/errors/AccountSelectionNoMatch"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.get_accounts",
+            "summary": "Get a list of all accounts held by Ledger Live.",
+            "description": "Get a list of all accounts held by Ledger Live.",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Accounts"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionReadAllAccounts"
+                },
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "selection",
+                    "summary": "Selection filter used to fetch the account",
+                    "description": "A set of filter used to select specific account on Ledger Live. If null it will prompt the user to choose from all accounts.",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountSelection"
+                    }
+                }
+            ],
+            "result": {
+                "name": "accounts",
+                "required": true,
+                "description": "A list of accounts matching the filter",
+                "summary": "A list of accounts matching the filter",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/Account"
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/UserCancel"
+                },
+                {
+                    "$ref": "#/components/errors/AccountSelectionNoMatch"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.account.sync",
+            "summary": "Synchronize the account with its network",
+            "description": "Synchronize the account with its network",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Accounts"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionUseAccount"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "account_id",
+                    "summary": "The account ID of the account to synchronize",
+                    "description": "The account ID of the account to synchronize",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "account",
+                "description": "An up to date version of the account object",
+                "summary": "An up to date version of the account object",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/Account"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/AccountIdDoesNotExist"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.account.receive",
+            "summary": "Get a reception address for the account and optionally trigger address verification on the device.",
+            "description": "Get a reception address for the account and optionally trigger address verification on the device.",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Accounts"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionUseAccount"
+                },
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "account_id",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountId"
+                    }
+                },
+                {
+                    "name": "verify",
+                    "summary": "Set to true, to verify the address on device",
+                    "required": false,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "address",
+                "summary": "An address suitable to receive funds",
+                "description": "An address suitable to receive funds",
+                "schema": {
+                    "$ref": "#/components/schemas/Address"
+                }
+            }
+        },
+        {
+            "name": "ledgerlive.account.estimate_fees",
+            "summary": "Estimate fees for a given transaction. The method returns an updated version of the transaction passed in parameter",
+            "description": "Estimate fees for a given transaction. The method returns an updated version of the transaction passed in parameter",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "account_uid",
+                    "required": true,
+                    "summary": "The account on which to perform the transaction",
+                    "description": "The account on which to perform the transaction",
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountId"
+                    }
+                },
+                {
+                    "name": "transaction",
+                    "required": true,
+                    "summary": "The transaction to estimate fees from",
+                    "description": "The transaction to estimate fees from",
+                    "schema": {
+                        "$ref": "#/components/schemas/Transaction"
+                    }
+                },
+                {
+                    "name": "priority",
+                    "required": false,
+                    "summary": "Desired confirmation priority on the blockchain.",
+                    "description": "The transaction priority, the higher the fees are, the fastest it may be included in a block. This parameters allows Ledger Live to estimate fees depending on a priority value (medium by default)",
+                    "schema": {
+                        "type": "string",
+                        "enum": [
+                            "low",
+                            "medium",
+                            "high"
+                        ]
+                    }
+                }
+            ],
+            "result": {
+                "name": "transaction",
+                "description": "The transaction passed in parameters but updated with actual fees values",
+                "schema": {
+                    "$ref": "#/components/schemas/Transaction"
+                }
+            }
+        },
+        {
+            "name": "ledgerlive.account.sign_transaction",
+            "summary": "Sign a transaction",
+            "description": "Sign a transaction",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "accountId",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountId"
+                    }
+                },
+                {
+                    "name": "transaction",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/Transaction"
+                    }
+                },
+                {
+                    "name": "forceApp",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/DeviceAppFilter"
+                    }
+                }
+            ],
+            "result": {
+                "name": "signedTransaction",
+                "description": "The signed transaction object",
+                "schema": {
+                    "$ref": "#/components/schemas/SignedTransaction"
+                }
+            },
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Transactions"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionTransaction"
+                },
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.account.broadcast",
+            "summary": "Use Ledger Live to broadcast a signed transaction",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "accountId",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountId"
+                    }
+                },
+                {
+                    "name": "signedTransaction",
+                    "schema": {
+                        "$ref": "#/components/schemas/ByteBuffer"
+                    }
+                }
+            ],
+            "result": {
+                "$ref": "#/components/schemas/UnitSuccessResponse"
+            },
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Transactions"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionTransaction"
+                },
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.account.sign_message",
+            "summary": "Sign an UTF-8 encoded message with a user private key.",
+            "description": "Sign an UTF-8 encoded message with a user private key.",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "account_id",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/AccountId"
+                    }
+                },
+                {
+                    "name": "path",
+                    "required": true,
+                    "summary": "Path of the private key to sign with (.e.g. 44'/0'/0'/0/12)",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "message",
+                    "required": true,
+                    "summary": "The message to sign (must be UTF-8 encoded). ",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "signedMessage",
+                "summary": "The message signed by the user private key",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Transactions"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionTransaction"
+                },
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.device.list_apps",
+            "summary": "List applications available on the device.",
+            "description": "List applications available on the device. This command will prompt the user to allow Ledger manager on the device.",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/PermissionDeviceRead"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "$ref": "#/components/schemas/DeviceModelInfo"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/UserCancel"
+                },
+                {
+                    "$ref": "#/components/errors/DeviceNotFound"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.device.request_app",
+            "summary": "Check if app is installed and what it's version and open it. fails if app is not there / user refuses / .",
+            "description": "",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/PermissionRequestApp"
+                }
+            ],
+            "params": [
+                {
+                    "name": "appName",
+                    "summary": "The name of the application to request on the device",
+                    "description": "The name of the application to request on the device",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "app",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/DeviceApp"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/UserCancel"
+                },
+                {
+                    "$ref": "#/components/errors/DeviceNotFound"
+                },
+                {
+                    "$ref": "#/components/errors/DeviceApplicationIsNotInstalled"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.device.bridge_app",
+            "summary": "Open a bridge between the thrid-party application and a given application to exchange APDU directly with only this app.",
+            "description": "Open a bridge between the thrid-party application and a given application to exchange APDU directly with only this app.",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/PermissionRequestApp"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionDeviceExchange"
+                }
+            ],
+            "params": [
+                {
+                    "name": "appName",
+                    "summary": "The name of the application to request on the device",
+                    "description": "The name of the application to request on the device",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "deviceBridge",
+                "schema": {
+                    "$ref": "#/components/schemas/DeviceBridgeId"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/UserCancel"
+                },
+                {
+                    "$ref": "#/components/errors/DeviceNotFound"
+                },
+                {
+                    "$ref": "#/components/errors/DeviceApplicationIsNotInstalled"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.device.bridge_dashboard",
+            "summary": "Open a bridge between the thrid-party application and the device dashboard to exchange APDU directly with the dashboard.",
+            "description": "Open a bridge between the thrid-party application and the device dashboard to exchange APDU directly with the dashboard.",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/PermissionRequestDashboard"
+                },
+                {
+                    "$ref": "#/components/tags/PermissionDeviceExchange"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "deviceBridge",
+                "schema": {
+                    "$ref": "#/components/schemas/DeviceBridgeId"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                },
+                {
+                    "$ref": "#/components/errors/UserCancel"
+                },
+                {
+                    "$ref": "#/components/errors/DeviceNotFound"
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.device.exchange",
+            "description": "Send APDU command buffer to the device and get command result. Note that if the device application is unable to process the APDU or returns an error, this call will still end up with a successful answer. Device application logic must be handled by the third-party application. Errors are only returned for Ledger live errors or transport wise errors (USB got disconnected, device did not respond...) ",
+            "summary": "Send APDU to the device and get its response",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/PermissionDeviceExchange"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "device_bridge_id",
+                    "summary": "The ID of the bridge to use to send APDU",
+                    "description": "Device bridge ID to an opened bridge",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "apdu_buffer",
+                    "required": true,
+                    "summary": "Hex encoded APDU",
+                    "description": "APDU encoded in an hexadecimal string to send to the device application",
+                    "schema": {
+                        "type": "string",
+                        "format": "hexadecimal byte buffer"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "summary": "Hex encoded APDU response",
+                "description": "Hex encoded APDU response",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "required": [],
+                    "format": "hexadecimal"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PermissionDenied"
+                }
+            ],
+            "examples": [
+                {
+                    "name": "Working APDU",
+                    "description": "Example of a APDU exchange with a valid APDU request and response.",
+                    "params": [
+                        {
+                            "name": "device_bridge_id",
+                            "value": "8901-...a893"
+                        },
+                        {
+                            "name": "apdu_buffer",
+                            "value": "E0030000210432...12"
+                        }
+                    ],
+                    "result": {
+                        "name": "result",
+                        "value": "416c6c20676f6f649000"
+                    }
+                },
+                {
+                    "name": "APDU returning a devive error",
+                    "description": "Example of a APDU exchange with an invalid APDU request and response.",
+                    "params": [
+                        {
+                            "name": "device_bridge_id",
+                            "value": "8901-...a893"
+                        },
+                        {
+                            "name": "apdu_buffer",
+                            "value": "DADA30000210432...12"
+                        }
+                    ],
+                    "result": {
+                        "name": "result",
+                        "value": "6A80"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ledgerlive.device.close",
+            "summary": "Close the device bridge between the third-party application and the device",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/PermissionDeviceExchange"
+                },
+                {
+                    "$ref": "#/components/tags/Version010000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "device_bridge_id",
+                    "required": true,
+                    "summary": "ID of the device bridge to close",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/UnitSuccessResponse"
+                }
+            }
+        },
+        {
+            "name": "ledgerlive.currencies.get",
+            "summary": "Get information about a crypto-currency by id",
+            "description": "Get information about a crypto-currency by id",
+            "paramStructure": "by-name",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/Version000000"
+                }
+            ],
+            "params": [
+                {
+                    "name": "currency_id",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/CryptoCurrencyIds"
+                    }
+                }
+            ],
+            "result": {
+                "name": "currency",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/CryptoCurrency"
+                }
+            }
+        }
+    ],
+    "components": {
+        "errors": {
+            "UriNoMatch": {
+                "code": 100,
+                "message": "The URI doesn't match any resource on Ledger Live"
+            },
+            "UserCancel": {
+                "code": 101,
+                "message": "The user canceled the operation"
+            },
+            "PermissionDenied": {
+                "code": 102,
+                "message": "Application doesn't have the permission to trigger this method"
+            },
+            "AccountSelectionNoMatch": {
+                "code": 200,
+                "message": "The account selection did not match any account."
+            },
+            "AccountIdDoesNotExist": {
+                "code": 201,
+                "message": "The account id doesn't belong to any account on Ledger Live."
+            },
+            "DeviceNotFound": {
+                "code": 300,
+                "message": "No device connected to Ledger Live."
+            },
+            "DeviceApplicationIsNotInstalled": {
+                "code": 301,
+                "message": "The requested application is not installed on the device"
+            }
+        },
+        "tags": {
+            "Accounts": {
+                "name": "Read Accounts",
+                "description": "Methods used to get informations on Ledger Live accounts"
+            },
+            "Devices": {
+                "name": "Devices",
+                "description": "Methods to interact with Ledger devices through Ledger Live"
+            },
+            "Transactions": {
+                "name": "Transactions and signature",
+                "description": "Methods used to sign messages and sign transactions"
+            },
+            "PermissionNavigation": {
+                "name": "Navigation Permission",
+                "description": "Allows third-party application to trigger navigation events on Ledger Live (to open pages, start flows)"
+            },
+            "PermissionUseAccount": {
+                "name": "Use account permission",
+                "description": "Allows third-party application to use Ledger Live accounts features"
+            },
+            "PermissionRequestAccount": {
+                "name": "Request account permission",
+                "description": "Allows third-party application to request Ledger Live accounts with UI."
+            },
+            "PermissionReadAllAccounts": {
+                "name": "Read all accounts permission",
+                "description": "Allows third-party application to get all Ledger Live accounts for read purposes."
+            },
+            "PermissionTransaction": {
+                "name": "Sign transaction permission",
+                "description": "Allows third-party applications to sign transactions and messages"
+            },
+            "PermissionDeviceRead": {
+                "name": "Read device permission",
+                "description": "Allows to read device informations (list applications, get device firmware version...)"
+            },
+            "PermissionRequestApp": {
+                "name": "Request app permission",
+                "description": "Allows to request the opening of an application and open a bridge to its application"
+            },
+            "PermissionRequestDashboard": {
+                "name": "Request dashboard",
+                "description": "Allows to bridge with the device dashboard to send APDU"
+            },
+            "PermissionDeviceExchange": {
+                "name": "APDU exchange permission",
+                "description": "Allows third-party application to open a bridge with a device connected to Ledger Live and exchange APDUs"
+            },
+
+            "Version000000": {
+                "name": "Version 0.0.0",
+                "description": "This method was introduced in version 0.0.0 of the API"
+            },
+            "Version010000": {
+                "name": "Version 1.0.0",
+                "description": "This method was introduced in version 1.0.0 of the API"
+            }
+        },
+        "contentDescriptors": {
+            "CryptoCurrencyIds": {
+                "name": "CryptoCurrencyIds",
+                "required": true,
+                "summary": "The ID used by Ledger Live to identify a crypto-currency",
+                "description": "The ID of a crypto currency  as def in https://github.com/LedgerHQ/ledgerjs/blob/master/packages/cryptoassets/src/currencies.js#L2730",
+                "schema": {
+                    "$ref": "#/components/schemas/CryptoCurrencyIds"
+                }
+            },
+            "AccountId": {
+                "name": "AccountId",
+                "description": "The ID used by Ledger Live to identify an account",
+                "summary": "The ID used by Ledger Live to identify an account",
+                "schema": {
+                    "$ref": "#/components/schemas/AccountId"
+                }
+            },
+            "DeviceBridgeId": {
+                "name": "DeviceBridgeId",
+                "schema": {
+                    "$ref": "#/components/schemas/DeviceBridgeId"
+                }
+            },
+            "Account": {
+                "name": "Account",
+                "summary": "A view an a account managed by Ledger Live",
+                "description": "A view an a account managed by Ledger Live",
+                "schema": {
+                    "$ref": "#/components/schemas/Account"
+                }
+            },
+            "Transaction": {
+                "name": "Transaction",
+                "summary": "A view used to create, sign, broadcast transactions",
+                "description": "A view used to create, sign, broadcast transactions",
+                "schema": {
+                    "$ref": "#/components/schemas/Transaction"
+                }
+            }
+        },
+        "schemas": {
+            "CryptoCurrencyIds": {
+                "type": "string",
+                "description": "The ID of a crypto currency on Ledger Live"
+            },
+            "AccountId": {
+                "type": "string",
+                "description": "The ID used by Ledger Live to identify an account"
+            },
+            "DeviceBridgeId": {
+                "type": "string",
+                "description": "The ID used to identify an open connection to a device"
+            },
+            "UnitSuccessResponse": {
+                "type": "null",
+                "description": "Successful result type, send back to acknowledge successful execution"
+            },
+            "AccountSelection": {
+                "type": "object",
+                "description": "Selection filter for account filtering",
+                "properties": {
+                    "currencyIds": {
+                        "type": "array",
+                        "description": "A list of accepted cryptocurrency ids",
+                        "items": {
+                            "$ref": "#/components/schemas/CryptoCurrencyIds"   
+                        }
+                    }
+                }
+            },
+            "ByteBuffer": {
+                "type": "string",
+                "description": "A byte buffer encoded in an hexadecimal string"
+            },
+            "Amount": {
+                "type": "string",
+                "format": "integer",
+                "description": "Expressed as an integer with the minimum unit of the currency (i.e. satoshi)",
+                "examples": [
+                    "1234"
+                ]
+            },
+            "BigInteger": {
+                "type": "string",
+                "format": "integer",
+                "description": "Integer formatted as a decimal string",
+                "examples": [
+                    "1234"
+                ]
+            },
+            "CryptoCurrency": {
+                "type": "object",
+                "description": "Metadata about a crypto-currency",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/CryptoCurrencyIds"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the currency"
+                    },
+                    "ticker": {
+                        "type": "string",
+                        "description": "The identifier of the currency (e.g. BTC, ETH...)"
+                    },
+                    "coinType": {
+                        "type": "integer",
+                        "description": "SLIP-44 coin type"
+                    },
+                    "color": {
+                        "type": "string",
+                        "format": "color",
+                        "description": "Currency color in Ledger Live"
+                    },
+                    "family": {
+                        "type": "string",
+                        "description": "Family of the currency (bitcoin, ethereum...)"
+                    },
+                    "exchangeData": {
+                        "type": "object",
+                        "description": "Crypto currency data used with the exchange app",
+                        "properties": {
+                            "config": {
+                                "$ref": "#/components/schemas/ByteBuffer"
+                            },
+                            "signature": {
+                                "$ref": "#/components/schemas/ByteBuffer"
+                            }
+                        }
+                    }
+                }
+            },
+            "Address": {
+                "type": "object",
+                "description": "An object representing an address and its derivation path",
+                "required": [
+                    "address",
+                    "derivationPath"
+                ],
+                "properties": {
+                    "address": {
+                        "type": "string"
+                    },
+                    "derivationPath": {
+                        "type": "string",
+                        "description": "Derivation path used to create this address. This path can be used to get public key, or request the device to use the private key to sign",
+                        "examples": [
+                            "44'/0'/0'/0/0"
+                        ]
+                    }
+                }
+            },
+            "Account": {
+                "type": "object",
+                "description": "A view on an account held by Ledger Live",
+                "readOnly": true,
+                "required": [
+                    "account_id",
+                    "balance",
+                    "currency",
+                    "freshAddresses"
+                ],
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/AccountId"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The account name (non unique)"
+                    },
+                    "currency": {
+                        "$ref": "#/components/schemas/CryptoCurrency"
+                    },
+                    "freshAddress": {
+                        "$ref": "#/components/schemas/Address",
+                        "description": "An address suitable to receive funds on the account (if the currency supports rolling addresses this address changes after each reception)"
+                    },
+                    "balance": {
+                        "$ref": "#/components/schemas/Amount",
+                        "description": "The amount of cryptocurrency held by the account (expressed in the lowest unit)"
+                    },
+                    "xpub": {
+                        "type": "string",
+                        "description": "The extended public key of the account (this field won't be set if the currency doesn't support extended public keys)"
+                    }
+                }
+            },
+            "Accounts": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Account"
+                }
+            },
+            "DeviceModelId": {
+                "type": "string",
+                "description": "As defined in https://github.com/LedgerHQ/ledgerjs/blob/master/packages/devices/src/index.js#L149",
+                "enum": [
+                    "blue",
+                    "nanoS",
+                    "nanoX"
+                ]
+            },
+            "DeviceInfo": {
+                "type": "object",
+                "required": [
+                    "mcuVersion",
+                    "version",
+                    "majMin",
+                    "targetId",
+                    "isBootloader",
+                    "isOSU",
+                    "managerAllowed",
+                    "pinValidated"
+                ],
+                "properties": {
+                    "mcuVersion": {
+                        "type": "string",
+                        "description": "The raw MCU version"
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "The version of the firmware"
+                    },
+                    "majMin": {
+                        "type": "string",
+                        "description": "The x.y part of the x.y.z-v version"
+                    },
+                    "targetId": {
+                        "type": "string",
+                        "description": "A technical version ID"
+                    },
+                    "isBootloader": {
+                        "type": "boolean",
+                        "description": "True if the device is currently in bootloader mode"
+                    },
+                    "isOSU": {
+                        "type": "boolean",
+                        "description": "True if the device is currently running on a OSU (OS updater)"
+                    },
+                    "managerAllowed": {
+                        "type": "boolean",
+                        "description": "True if Ledger manager has been allowed on the device"
+                    },
+                    "pinValidated": {
+                        "type": "boolean",
+                        "description": "True if the device is unlocked"
+                    }
+                }
+            },
+            "DeviceModelInfo": {
+                "type": "object",
+                "required": [
+                    "modelId"
+                ],
+                "properties": {
+                    "modelId": {
+                        "$ref": "#/components/schemas/DeviceModelId"
+                    },
+                    "deviceInfo": {
+                        "$ref": "#/components/schemas/DeviceInfo"
+                    },
+                    "apps": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeviceApp"
+                        }
+                    }
+                }
+            },
+            "DeviceApp": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "version"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeviceAppFilter": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the application to use"
+                    },
+                    "minimumVersion": {
+                        "type": "string",
+                        "description": "Minimum version of the application"
+                    }
+                }
+            },
+            "Transaction": {
+                "type": "object",
+                "required": [
+                    "family",
+                    "info",
+                    "amount",
+                    "recipient"
+                ],
+                "description": "Representation of a transaction, used to prepare transaction before signature",
+                "properties": {
+                    "family": {
+                        "type": "string",
+                        "description": "The coin family of the transaction (bitcoin, ethereum...)"
+                    },
+                    "info": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/EthereumTransaction"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BitcoinTransaction"
+                            },
+                            {
+                                "$ref": "#/components/schemas/XrpTransaction"
+                            }
+                        ]
+                    }
+                }
+            },
+            "EthereumTransaction": {
+                "type": "object",
+                "description": "Ethereum transaction representation as in https://github.com/LedgerHQ/ledger-live-common/blob/master/src/families/ethereum/types.js",
+                "required": [
+                    "amount",
+                    "recipient"
+                ],
+                "properties": {
+                    "amount": {
+                        "$ref": "#/components/schemas/Amount"
+                    },
+                    "recipient": {
+                        "type": "string",
+                        "description": "The address of the recipient"
+                    },
+                    "nonce": {
+                        "type": "integer"
+                    },
+                    "data": {
+                        "description": "Contract data",
+                        "$ref": "#/components/schemas/ByteBuffer"
+                    },
+                    "gasPrice": {
+                        "description": "Gas price used to make the transaction",
+                        "$ref": "#/components/schemas/Amount"
+                    },
+                    "gasLimit": {
+                        "description": "Gas limit set by the user (null otherwise)",
+                        "$ref": "#/components/schemas/BigInteger"
+                    }
+                }
+            },
+            "BitcoinTransaction": {
+                "type": "object",
+                "required": [
+                   "amount",
+                   "recipient"
+                ],
+                "properties": {
+                    "amount": {
+                        "$ref": "#/components/schemas/Amount"
+                    },
+                    "recipient": {
+                        "type": "string",
+                        "description": "The address of the recipient"
+                    },
+                    "rbf": {
+                        "type": "boolean",
+                        "description": "True if the transaction is marked as replaceable, false otherwise"
+                    },
+                    "feePerByte": {
+                        "$ref": "#/components/schemas/Amount"
+                    }
+                }
+            },
+            "XrpTransaction": {
+                "type": "object",
+                "required": [
+                    "amount",
+                    "recipient"
+                ],
+                "properties": {
+                    "amount": {
+                        "$ref": "#/components/schemas/Amount"
+                    },
+                    "recipient": {
+                        "type": "string",
+                        "description": "The address of the recipient"
+                    },
+                    "fee": {
+                        "$ref": "#/components/schemas/Amount"
+                    },
+                    "tag": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "SignedTransaction": {
+                "type": "object",
+                "required": [
+                    "raw"
+                ],
+                "properties": {
+                    "raw": {
+                        "$ref": "#/components/schemas/ByteBuffer",
+                        "description": "The serialized signed transaction, ready to be broadcasted"
+                    }
+                }
+            }
+        }
+    }
+}
