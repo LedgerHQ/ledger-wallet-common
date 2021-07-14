@@ -34,7 +34,8 @@
     "flow",
     "react.js",
     "reactNative.js",
-    ".flowconfig"
+    ".flowconfig",
+    ".yalc"
   ],
   "jest": {
     "testEnvironment": "node",
